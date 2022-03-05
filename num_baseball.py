@@ -3,8 +3,8 @@ Title : Number Baseball Game
 Author : Seungje
 Date : 2022.03.05
 Version : 1.0
-Description : ...
-How to play : 
+Description : This is a guessing number game.
+How to play : Player input three digits number.
 '''
 
 import random
