@@ -105,7 +105,8 @@ def init_baseball():
     user_num, l_user_num = check_user_num(user_num, l_user_num)
     target_num = get_target_num(l_user_num)
     repeat_num = 1
-    return user_num, l_user_num, target_num, repeat_num
+    out_count = 1
+    return user_num, l_user_num, target_num, repeat_num, out_count
 
 text1 = "input a number : "
 text2 = "Sorry, It's not corrected number. Please again."
@@ -114,17 +115,28 @@ def run_baseball():
     '''
     execution function
     '''
-    user_num, l_user_num, target_num, repeat_num = init_baseball()
+    user_num, l_user_num, target_num, repeat_num, out_count = init_baseball()
     
     while True:
         ballcount = [0 for idx in range(2)]
         ballcount = check_ballcount(user_num, target_num, ballcount)
         if ballcount[0] == l_user_num:
-            print(l_user_num, "Strike, OUT!!")
+            print(l_user_num, "Strike, It's over!!")
             print("You succeeded in", repeat_num,"attempts.")
             break
         else:
-            print(ballcount[0], "Strike, ", ballcount[1], "Ball")
+            if ballcount[0] != 0 and ballcount[1] != 0:
+                print(ballcount[0], "Strike, ", ballcount[1], "Ball")
+            elif ballcount[0] != 0 and ballcount[1] == 0:
+                print(ballcount[0], "Strike")
+            elif ballcount[0] == 0 and ballcount[1] != 0:
+                print(ballcount[1], "Ball")
+            else:
+                print(out_count, "OUT!!")
+                out_count += 1
+                if out_count > 3:
+                    print("Game Over")
+                    break
             repeat_num += 1
         user_num = change_tolist(input(text1))
         user_num, l_user_num = check_user_num(user_num, l_user_num)
