@@ -15,7 +15,7 @@ def get_target_num(digits):
     that is a length of user's first input.
     The output has not duplicate numbers.
     input : int
-    output : list of integers
+    output : list of ints
     '''
     target = [random.randint(1,9) for idx in range(digits)]
     target_num = []
@@ -64,7 +64,7 @@ def check_num(num):
             result = True
     return result
 
-def check_ballcount(user_num, target_num, ballcount):
+def check_count(user_num, target_num, count):
     '''
     check a number of strikes and balls
     input : list, list, list
@@ -74,10 +74,10 @@ def check_ballcount(user_num, target_num, ballcount):
     for idx1 in range(l_num):
         for idx2 in range(l_num):
             if idx1 == idx2 and user_num[idx1] == target_num[idx2]:
-                ballcount[0] += 1
+                count[0] += 1
             if idx1 != idx2 and user_num[idx1] == target_num[idx2]:
-                ballcount[1] += 1
-    return ballcount
+                count[1] += 1
+    return count
 
 def check_user_num(user_num, l_user_num):
     '''
@@ -105,8 +105,7 @@ def init_baseball():
     user_num, l_user_num = check_user_num(user_num, l_user_num)
     target_num = get_target_num(l_user_num)
     repeat_num = 1
-    out_count = 1
-    return user_num, l_user_num, target_num, repeat_num, out_count
+    return user_num, l_user_num, target_num, repeat_num
 
 text1 = "input a number : "
 text2 = "Sorry, It's not corrected number. Please again."
@@ -115,32 +114,30 @@ def run_baseball():
     '''
     execution function
     '''
-    user_num, l_user_num, target_num, repeat_num, out_count = init_baseball()
+    user_num, l_user_num, target_num, repeat_num = init_baseball()
     
-    while True:
-        ballcount = [0 for idx in range(2)]
-        ballcount = check_ballcount(user_num, target_num, ballcount)
-        if ballcount[0] == l_user_num:
-            print(l_user_num, "Strike, It's over!!")
+    running = True
+
+    while running:
+        count = [0 for idx in range(2)]
+        count = check_count(user_num, target_num, count)
+        if count[0] == l_user_num:
+            print("Home run!!")
             print("You succeeded in", repeat_num,"attempts.")
             break
         else:
-            if ballcount[0] != 0 and ballcount[1] != 0:
-                print(ballcount[0], "Strike, ", ballcount[1], "Ball")
-            elif ballcount[0] != 0 and ballcount[1] == 0:
-                print(ballcount[0], "Strike")
-            elif ballcount[0] == 0 and ballcount[1] != 0:
-                print(ballcount[1], "Ball")
+            if count[0] != 0 and count[1] != 0:
+                print(str(count[0]) + "S", str(count[1]) + "B")
+            elif count[0] != 0 and count[1] == 0:
+                print(str(count[0]) + "S")
+            elif count[0] == 0 and count[1] != 0:
+                print(str(count[1]) + "B")
             else:
-                print(out_count, "OUT!!")
-                out_count += 1
-                if out_count > 3:
-                    print("Game Over")
-                    break
+                print("O")
+            
             repeat_num += 1
         user_num = change_tolist(input(text1))
         user_num, l_user_num = check_user_num(user_num, l_user_num)
 
 if __name__ == "__main__":
     run_baseball()
-
