@@ -4,7 +4,7 @@ Author : Seungje
 Date : 2022.03.05
 Version : 1.0
 Description : This is a guessing number game.
-How to play : Player input three digits number.
+How to play : Player inputs three digits number.
 '''
 
 import random
